@@ -13,76 +13,88 @@ export class HeroMesh {
     this.pulseMode = false;
     this.warpMode = false;
 
-    // Create Main Mesh
+    // Premium Cyber Material for Main Mesh
     this.meshMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x0a0f24,
+      color: 0x070c20,
       emissive: 0x00f3ff,
-      emissiveIntensity: 0.25,
-      roughness: 0.15,
-      metalness: 0.85,
+      emissiveIntensity: 0.4,
+      roughness: 0.12,
+      metalness: 0.9,
       clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      reflectivity: 0.9,
+      clearcoatRoughness: 0.05,
+      reflectivity: 1.0,
       wireframe: this.wireframeMode
     });
 
-    this.buildGeometry(this.currentShapeType);
-
-    // Inner Wireframe Accent Mesh
+    // Wireframe Outer Cage Material
     this.wireframeMaterial = new THREE.MeshBasicMaterial({
       color: 0x9d4edd,
       wireframe: true,
       transparent: true,
-      opacity: 0.35
+      opacity: 0.4
     });
-    this.innerMesh = new THREE.Mesh(this.meshGeometry, this.wireframeMaterial);
-    this.innerMesh.scale.set(1.08, 1.08, 1.08);
-    this.group.add(this.innerMesh);
 
-    // Orbital Particle Ring around Mesh
-    this.createOrbitalRing();
+    // Outer Gyroscope Holographic Rings Materials
+    this.ringMaterial1 = new THREE.MeshBasicMaterial({
+      color: 0x00f3ff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.65
+    });
 
-    // Mouse Tracking target
+    this.ringMaterial2 = new THREE.MeshBasicMaterial({
+      color: 0x00ff9d,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.5
+    });
+
+    // Build Central 3D Geometry
+    this.buildGeometry(this.currentShapeType);
+
+    // Create Holographic Gyro-Rings
+    this.createHolographicGyroRings();
+
+    // Create Double-Helix Orbital Particle Field
+    this.createDoubleHelixParticles();
+
+    // Mouse Tracking Target
     this.targetRotation = { x: 0, y: 0 };
   }
 
   buildGeometry(type) {
-    if (this.mainMesh) {
-      this.group.remove(this.mainMesh);
-    }
-    if (this.innerMesh) {
-      this.group.remove(this.innerMesh);
-    }
+    if (this.mainMesh) this.group.remove(this.mainMesh);
+    if (this.innerMesh) this.group.remove(this.innerMesh);
 
     this.currentShapeType = type;
 
     switch (type) {
       case 'torusKnot':
-        this.meshGeometry = new THREE.TorusKnotGeometry(1.4, 0.45, 128, 32, 2, 3);
+        this.meshGeometry = new THREE.TorusKnotGeometry(1.35, 0.42, 128, 32, 2, 3);
         break;
       case 'icosahedron':
-        this.meshGeometry = new THREE.IcosahedronGeometry(1.8, 1);
+        this.meshGeometry = new THREE.IcosahedronGeometry(1.75, 1);
         break;
       case 'dodecahedron':
-        this.meshGeometry = new THREE.DodecahedronGeometry(1.7, 0);
+        this.meshGeometry = new THREE.DodecahedronGeometry(1.65, 0);
         break;
       case 'octahedron':
-        this.meshGeometry = new THREE.OctahedronGeometry(1.9, 0);
+        this.meshGeometry = new THREE.OctahedronGeometry(1.85, 0);
         break;
       case 'torus':
-        this.meshGeometry = new THREE.TorusGeometry(1.6, 0.5, 30, 100);
+        this.meshGeometry = new THREE.TorusGeometry(1.55, 0.48, 30, 100);
         break;
       case 'cube':
-        this.meshGeometry = new THREE.BoxGeometry(2.2, 2.2, 2.2, 8, 8, 8);
+        this.meshGeometry = new THREE.BoxGeometry(2.1, 2.1, 2.1, 8, 8, 8);
         break;
       case 'sphere':
-        this.meshGeometry = new THREE.SphereGeometry(1.8, 48, 48);
+        this.meshGeometry = new THREE.SphereGeometry(1.75, 48, 48);
         break;
       case 'pyramid':
-        this.meshGeometry = new THREE.ConeGeometry(2.0, 2.6, 4);
+        this.meshGeometry = new THREE.ConeGeometry(1.9, 2.5, 4);
         break;
       default:
-        this.meshGeometry = new THREE.TorusKnotGeometry(1.4, 0.45, 128, 32);
+        this.meshGeometry = new THREE.TorusKnotGeometry(1.35, 0.42, 128, 32);
     }
 
     this.mainMesh = new THREE.Mesh(this.meshGeometry, this.meshMaterial);
@@ -90,21 +102,64 @@ export class HeroMesh {
 
     if (this.wireframeMaterial) {
       this.innerMesh = new THREE.Mesh(this.meshGeometry, this.wireframeMaterial);
-      this.innerMesh.scale.set(1.08, 1.08, 1.08);
+      this.innerMesh.scale.set(1.07, 1.07, 1.07);
       this.group.add(this.innerMesh);
     }
 
-    // Morph scaling transition using GSAP
-    this.group.scale.set(0.2, 0.2, 0.2);
+    // Elastic morph scaling transition using GSAP
+    this.group.scale.set(0.15, 0.15, 0.15);
     gsap.to(this.group.scale, {
       x: 1,
       y: 1,
       z: 1,
-      duration: 1.2,
-      ease: "elastic.out(1, 0.5)"
+      duration: 1.1,
+      ease: "elastic.out(1, 0.45)"
     });
 
     this.triggerParticleExplosion();
+  }
+
+  createHolographicGyroRings() {
+    this.ringGroup = new THREE.Group();
+    this.group.add(this.ringGroup);
+
+    // Gyro Ring 1
+    const rGeo1 = new THREE.TorusGeometry(2.4, 0.025, 16, 96);
+    this.gyroRing1 = new THREE.Mesh(rGeo1, this.ringMaterial1);
+    this.gyroRing1.rotation.x = Math.PI / 3;
+    this.ringGroup.add(this.gyroRing1);
+
+    // Gyro Ring 2
+    const rGeo2 = new THREE.TorusGeometry(2.75, 0.025, 16, 96);
+    this.gyroRing2 = new THREE.Mesh(rGeo2, this.ringMaterial2);
+    this.gyroRing2.rotation.z = -Math.PI / 3.5;
+    this.ringGroup.add(this.gyroRing2);
+  }
+
+  createDoubleHelixParticles() {
+    this.helixCount = 240;
+    const geo = new THREE.BufferGeometry();
+    const pos = new Float32Array(this.helixCount * 3);
+
+    for (let i = 0; i < this.helixCount; i++) {
+      const angle = (i / this.helixCount) * Math.PI * 8;
+      const radius = 3.3 + Math.sin(i * 0.3) * 0.3;
+      pos[i * 3] = Math.cos(angle) * radius;
+      pos[i * 3 + 1] = ((i / this.helixCount) - 0.5) * 4.5;
+      pos[i * 3 + 2] = Math.sin(angle) * radius;
+    }
+
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+
+    this.helixMaterial = new THREE.PointsMaterial({
+      color: 0x00f3ff,
+      size: 0.08,
+      transparent: true,
+      opacity: 0.85
+    });
+
+    this.helixPoints = new THREE.Points(geo, this.helixMaterial);
+    this.group.add(this.helixPoints);
   }
 
   getGeometryStats() {
@@ -125,8 +180,7 @@ export class HeroMesh {
   }
 
   triggerDisintegrate() {
-    // Explode into 300 particle nodes and assemble back
-    const burstCount = 300;
+    const burstCount = 350;
     const geo = new THREE.BufferGeometry();
     const positions = new Float32Array(burstCount * 3);
     const velocities = [];
@@ -137,16 +191,16 @@ export class HeroMesh {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
 
       velocities.push(
-        (Math.random() - 0.5) * 0.25,
-        (Math.random() - 0.5) * 0.25,
-        (Math.random() - 0.5) * 0.25
+        (Math.random() - 0.5) * 0.28,
+        (Math.random() - 0.5) * 0.28,
+        (Math.random() - 0.5) * 0.28
       );
     }
 
     geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const mat = new THREE.PointsMaterial({
       color: 0x00f3ff,
-      size: 0.14,
+      size: 0.15,
       transparent: true,
       opacity: 1
     });
@@ -154,7 +208,6 @@ export class HeroMesh {
     const burstPoints = new THREE.Points(geo, mat);
     this.scene.add(burstPoints);
 
-    // Shrink main mesh out
     gsap.to(this.group.scale, {
       x: 0.05,
       y: 0.05,
@@ -184,7 +237,6 @@ export class HeroMesh {
         geo.dispose();
         mat.dispose();
 
-        // Re-assemble scale back in
         gsap.to(this.group.scale, {
           x: 1,
           y: 1,
@@ -197,7 +249,7 @@ export class HeroMesh {
   }
 
   triggerParticleExplosion() {
-    const burstCount = 120;
+    const burstCount = 140;
     const geo = new THREE.BufferGeometry();
     const positions = new Float32Array(burstCount * 3);
     const velocities = [];
@@ -208,9 +260,9 @@ export class HeroMesh {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
 
       velocities.push(
-        (Math.random() - 0.5) * 0.12,
-        (Math.random() - 0.5) * 0.12,
-        (Math.random() - 0.5) * 0.12
+        (Math.random() - 0.5) * 0.14,
+        (Math.random() - 0.5) * 0.14,
+        (Math.random() - 0.5) * 0.14
       );
     }
 
@@ -249,31 +301,6 @@ export class HeroMesh {
     });
   }
 
-  createOrbitalRing() {
-    const ringCount = 180;
-    const ringGeo = new THREE.BufferGeometry();
-    const ringPos = new Float32Array(ringCount * 3);
-
-    for (let i = 0; i < ringCount; i++) {
-      const angle = (i / ringCount) * Math.PI * 2;
-      const radius = 3.2 + Math.sin(i * 0.5) * 0.2;
-      ringPos[i * 3] = Math.cos(angle) * radius;
-      ringPos[i * 3 + 1] = Math.sin(i * 3) * 0.3;
-      ringPos[i * 3 + 2] = Math.sin(angle) * radius;
-    }
-
-    ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
-    const ringMat = new THREE.PointsMaterial({
-      color: 0x00f3ff,
-      size: 0.08,
-      transparent: true,
-      opacity: 0.85
-    });
-
-    this.ringPoints = new THREE.Points(ringGeo, ringMat);
-    this.group.add(this.ringPoints);
-  }
-
   setWireframe(enabled) {
     this.wireframeMode = enabled;
     this.meshMaterial.wireframe = enabled;
@@ -297,6 +324,24 @@ export class HeroMesh {
       b: new THREE.Color(wireframeHex).b,
       duration: 0.8
     });
+
+    if (this.ringMaterial1) {
+      gsap.to(this.ringMaterial1.color, {
+        r: new THREE.Color(emissiveHex).r,
+        g: new THREE.Color(emissiveHex).g,
+        b: new THREE.Color(emissiveHex).b,
+        duration: 0.8
+      });
+    }
+
+    if (this.ringMaterial2) {
+      gsap.to(this.ringMaterial2.color, {
+        r: new THREE.Color(wireframeHex).r,
+        g: new THREE.Color(wireframeHex).g,
+        b: new THREE.Color(wireframeHex).b,
+        duration: 0.8
+      });
+    }
   }
 
   setMouseParallax(mouseX, mouseY) {
@@ -308,30 +353,37 @@ export class HeroMesh {
     const effectiveSpeed = this.warpMode ? this.rotationSpeed * 3.5 : this.rotationSpeed;
     const t = time * 0.001 * effectiveSpeed;
 
-    // Smooth rotation
-    this.group.rotation.x += (this.targetRotation.x - this.group.rotation.x) * 0.05 + 0.002 * effectiveSpeed;
-    this.group.rotation.y += (this.targetRotation.y - this.group.rotation.y) * 0.05 + 0.005 * effectiveSpeed;
+    // Smooth Core Rotation
+    this.group.rotation.x += (this.targetRotation.x - this.group.rotation.x) * 0.05 + 0.003 * effectiveSpeed;
+    this.group.rotation.y += (this.targetRotation.y - this.group.rotation.y) * 0.05 + 0.006 * effectiveSpeed;
 
-    if (this.warpMode) {
-      this.group.rotation.z += 0.02;
+    // Gyroscope Holographic Rings Rotation
+    if (this.gyroRing1) {
+      this.gyroRing1.rotation.x += 0.012 * effectiveSpeed;
+      this.gyroRing1.rotation.y += 0.008 * effectiveSpeed;
+    }
+    if (this.gyroRing2) {
+      this.gyroRing2.rotation.z += 0.015 * effectiveSpeed;
+      this.gyroRing2.rotation.y -= 0.01 * effectiveSpeed;
     }
 
-    if (this.ringPoints) {
-      this.ringPoints.rotation.z = -t * (this.warpMode ? 1.5 : 0.5);
-      this.ringPoints.rotation.y = t * (this.warpMode ? 1.2 : 0.3);
+    // Double Helix Particle Rotation
+    if (this.helixPoints) {
+      this.helixPoints.rotation.y = t * 0.6;
+      this.helixPoints.rotation.z = Math.sin(t * 0.4) * 0.15;
     }
 
     // Pulse mode scale modulation
     if (this.pulseMode) {
       const pulseScale = 1 + Math.sin(time * 0.005) * 0.18;
       this.mainMesh.scale.set(pulseScale, pulseScale, pulseScale);
-      if (this.innerMesh) this.innerMesh.scale.set(pulseScale * 1.08, pulseScale * 1.08, pulseScale * 1.08);
+      if (this.innerMesh) this.innerMesh.scale.set(pulseScale * 1.07, pulseScale * 1.07, pulseScale * 1.07);
     } else {
       this.mainMesh.scale.set(1, 1, 1);
-      if (this.innerMesh) this.innerMesh.scale.set(1.08, 1.08, 1.08);
+      if (this.innerMesh) this.innerMesh.scale.set(1.07, 1.07, 1.07);
     }
 
     // Floating levitation bobbing
-    this.group.position.y = Math.sin(t * 1.5) * (this.warpMode ? 0.35 : 0.18);
+    this.group.position.y = Math.sin(t * 1.5) * (this.warpMode ? 0.35 : 0.2);
   }
 }
