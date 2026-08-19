@@ -6,6 +6,7 @@ import { initTheme, setTheme } from './utils/theme.js';
 import { SceneManager } from './webgl/SceneManager.js';
 import { StarField } from './webgl/StarField.js';
 import { HeroMesh } from './webgl/HeroMesh.js';
+import { CyberGridTerrain } from './webgl/CyberGridTerrain.js';
 import { MouseParallax } from './webgl/MouseParallax.js';
 
 import { renderNavbar } from './components/Navbar.js';
@@ -31,11 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const starField = new StarField(sceneManager.scene, 3000);
   sceneManager.addUpdatable(starField);
 
+  const cyberTerrain = new CyberGridTerrain(sceneManager.scene);
+  sceneManager.addUpdatable(cyberTerrain);
+
   const heroMesh = new HeroMesh(sceneManager.scene);
   sceneManager.addUpdatable(heroMesh);
 
   // Initialize Theme System & WebGL Sync
-  initTheme(sceneManager, heroMesh);
+  initTheme(sceneManager, heroMesh, cyberTerrain);
 
   // Mouse Parallax for WebGL Mesh & Camera
   new MouseParallax((x, y) => {

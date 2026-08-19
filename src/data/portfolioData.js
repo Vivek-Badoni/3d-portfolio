@@ -1,26 +1,27 @@
 export const portfolioData = {
   personalInfo: {
     name: "Vivek Badoni",
-    role: "Full-Stack Web Developer",
-    taglines: [
-      "Building Modern Web Experiences",
-      "Full-Stack Web Development",
-      "Laravel & PHP Developer",
-      "Creative UI/UX & Interactive Websites"
-    ],
-    bio: "B.Sc. IT student and passionate Full-Stack Web Developer focused on building modern, responsive, and scalable web applications. Experienced with Laravel, PHP, JavaScript, React, Python, MySQL, and modern frontend technologies, with a strong interest in creating clean UI and practical digital solutions.",
-    location: "Dehradun, Uttarakhand, India",
+    role: "Full-Stack Developer (Python / Flask / React)",
+    phone: "+91 9690384930",
     email: "badonivivek2006@gmail.com",
-    status: "Open to Internships, Freelance & Full-Time Opportunities",
+    location: "Dehradun, Uttarakhand, India",
+    status: "Open for Full-Stack / Software Developer Roles & Internships",
+    taglines: [
+      "Full-Stack Developer (Python / Flask / React)",
+      "PHP & Laravel Web Application Engineer",
+      "Building ATS & Database-Driven Applications",
+      "Creative 3D WebGL & Modern Frontend UI"
+    ],
+    bio: "B.Sc. Information Technology student (2026) with hands-on experience across Python, Flask, PHP, and React through two internships and multiple full-stack projects. Skilled at building complete web applications end-to-end — frontend UI, backend logic, database design, and authentication. Currently working as a Full-Stack Developer Intern, contributing to both frontend and backend of live production features.",
     socials: [
       {
         name: "GitHub",
-        url: "https://github.com/Vivek-Badoni/",
+        url: "https://github.com/Vivek-Badoni",
         icon: "github"
       },
       {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/vivek-badoni/",
+        url: "https://www.linkedin.com/in/vivek-badoni",
         icon: "linkedin"
       }
     ]
@@ -28,236 +29,191 @@ export const portfolioData = {
 
   stats: [
     {
-      label: "Projects Built",
-      value: "10+",
+      label: "Internships Completed",
+      value: "2+",
       color: "#00f3ff"
     },
     {
-      label: "Technologies",
-      value: "15+",
+      label: "Full-Stack Projects",
+      value: "5+",
       color: "#9d4edd"
     },
     {
-      label: "Web Development",
-      value: "Full-Stack",
+      label: "Core Languages",
+      value: "Java, Python, C++, PHP",
       color: "#00ff9d"
     },
     {
-      label: "Graduation",
-      value: "2026",
+      label: "Graduation (B.Sc. IT)",
+      value: "May 2026",
       color: "#ffb703"
     }
   ],
 
   skills: {
     frontend: [
-      {
-        name: "HTML5 / CSS3",
-        level: 95,
-        icon: "layout"
-      },
-      {
-        name: "JavaScript",
-        level: 90,
-        icon: "code"
-      },
-      {
-        name: "React.js",
-        level: 82,
-        icon: "atom"
-      },
-      {
-        name: "Bootstrap",
-        level: 92,
-        icon: "grid"
-      },
-      {
-        name: "Tailwind CSS",
-        level: 80,
-        icon: "wind"
-      }
+      { name: "React.js", level: 88 },
+      { name: "JavaScript (ES6+)", level: 92 },
+      { name: "HTML5 & CSS3", level: 95 },
+      { name: "Tailwind CSS & Bootstrap", level: 90 },
+      { name: "jQuery & Responsive Design", level: 88 }
     ],
 
     backend: [
-      {
-        name: "PHP / Laravel",
-        level: 90,
-        icon: "server"
-      },
-      {
-        name: "Python",
-        level: 82,
-        icon: "terminal"
-      },
-      {
-        name: "MySQL",
-        level: 88,
-        icon: "database"
-      },
-      {
-        name: "REST APIs",
-        level: 85,
-        icon: "cpu"
-      }
+      { name: "Python & Flask", level: 90 },
+      { name: "PHP & Laravel", level: 92 },
+      { name: "RESTful APIs & MVC Architecture", level: 88 },
+      { name: "Eloquent ORM", level: 86 }
+    ],
+
+    databases: [
+      { name: "MySQL", level: 90 },
+      { name: "SQLite", level: 88 },
+      { name: "MS SQL Server", level: 80 },
+      { name: "Database Design & CRUD", level: 92 }
     ],
 
     tools: [
-      {
-        name: "Git / GitHub",
-        level: 90,
-        icon: "git-branch"
-      },
-      {
-        name: "VS Code",
-        level: 95,
-        icon: "code"
-      },
-      {
-        name: "Figma",
-        level: 78,
-        icon: "figma"
-      },
-      {
-        name: "Vite / npm",
-        level: 82,
-        icon: "package"
-      }
+      { name: "Git & GitHub", level: 90 },
+      { name: "VS Code & IntelliJ", level: 92 },
+      { name: "Chart.js & ReportLab", level: 85 },
+      { name: "Postman & Linux CLI", level: 84 }
     ]
   },
+
+  experience: [
+    {
+      period: "Ongoing",
+      role: "Full-Stack Developer Intern",
+      company: "Tulyarth Pvt. Ltd.",
+      bullets: [
+        "Working on both frontend and backend for a live production web application — building UI with HTML, CSS, JavaScript, and React, and developing backend logic and functionality.",
+        "Collaborating with a cross-functional development team on full-stack feature delivery, debugging, and code reviews."
+      ],
+      description: "Contributing to live production features across frontend React/JavaScript and backend architecture, optimizing code quality and UI performance."
+    },
+    {
+      period: "Jun – Aug 2025",
+      role: "Full-Stack Web Development Intern",
+      company: "Ensino Research and Development Pvt. Ltd.",
+      bullets: [
+        "Built a full-stack web application in Flask with database-backed backend logic across multiple modules (auth, dashboard, CRUD).",
+        "Implemented secure login with password hashing and session-based authentication, protecting all user-facing routes."
+      ],
+      description: "Designed secure Flask modules, authentication pipelines, session control, and database-backed dashboards."
+    },
+    {
+      period: "Jun – Jul 2024",
+      role: "Core Python Intern",
+      company: "Ensino Research and Development Pvt. Ltd.",
+      bullets: [
+        "Developed multiple Python automation scripts for data handling tasks, cutting down repetitive manual processing."
+      ],
+      description: "Built automated data processing scripts in Python, streamlining workflow efficiency."
+    }
+  ],
+
+  education: [
+    {
+      degree: "Bachelor of Science in Information Technology (B.Sc. IT)",
+      institution: "Uttaranchal University, Dehradun, Uttarakhand",
+      period: "Aug 2023 – May 2026"
+    },
+    {
+      degree: "Senior Secondary (Class XII)",
+      institution: "CBSE Board",
+      period: "2023"
+    },
+    {
+      degree: "High School (Class X)",
+      institution: "CBSE Board",
+      period: "2021"
+    }
+  ],
+
+  certifications: [
+    {
+      name: "Core Python",
+      issuer: "Ensino Research and Development Pvt. Ltd."
+    },
+    {
+      name: "Full-Stack Web Development using Python",
+      issuer: "Ensino Research and Development Pvt. Ltd."
+    },
+    {
+      name: "AWS Cloud Computing",
+      issuer: "Coplur Workshop"
+    },
+    {
+      name: "ChatGPT for Everyone",
+      issuer: "GUVI"
+    },
+    {
+      name: "Roadmap for Patent Writing",
+      issuer: "NPTEL"
+    }
+  ],
 
   projects: [
     {
       id: "proj-1",
-      title: "Sunset Vista Resort",
-      category: "Full Stack",
-      subtitle:
-        "Modern resort booking and management platform with customer and admin workflows.",
-      description:
-        "A full-stack Laravel-based resort management system featuring room and service management, customer bookings, booking status control, cancellation handling, admin dashboard, user management, queries, gallery and booking receipt generation.",
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
-      tags: [
-        "Laravel",
-        "PHP",
-        "MySQL",
-        "Bootstrap",
-        "JavaScript"
-      ],
-      demoUrl: "https://portfolio-vivek-badoni.onrender.com/",
-      githubUrl: "https://github.com/Vivek-Badoni/",
+      title: "AI-Powered Resume Analyzer & ATS Scoring System",
+      category: "AI & Python",
+      subtitle: "Full-stack ATS scoring engine with analytics dashboard and automated PDF report generation.",
+      description: "Built a full-stack ATS scoring engine in Python and Flask that evaluates resumes across 6+ core sections and matches skills against multiple job roles. Designed an admin analytics dashboard with 4+ chart types (role distribution, skill gaps, score trends) using Chart.js. Automated PDF report generation and CSV export with ReportLab.",
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop",
+      tags: ["Python", "Flask", "SQLite", "Chart.js", "ReportLab", "ATS Engine"],
+      demoUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni",
       featured: true
     },
-
     {
       id: "proj-2",
-      title: "AI Resume Analyzer & ATS",
-      category: "AI Apps",
-      subtitle:
-        "AI-powered resume analysis and ATS scoring application.",
-      description:
-        "A Python and Flask-based application designed to analyze resumes, evaluate ATS compatibility, identify important skills and provide useful feedback to improve resume quality.",
-      image:
-        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop",
-      tags: [
-        "Python",
-        "Flask",
-        "AI",
-        "NLP",
-        "ATS"
-      ],
-      demoUrl: "https://github.com/Vivek-Badoni/",
-      githubUrl: "https://github.com/Vivek-Badoni/",
+      title: "Laravel Login & Registration System",
+      category: "Laravel & PHP",
+      subtitle: "Complete authentication module built with Laravel MVC architecture & Eloquent ORM.",
+      description: "Built a complete authentication module in Laravel featuring registration, login, logout, and protected dashboard routes. Secured the application with CSRF protection, bcrypt password hashing, form validation, and middleware route guards. Designed reusable Blade template views.",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
+      tags: ["PHP", "Laravel", "MySQL", "Eloquent ORM", "Blade", "Security"],
+      demoUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni",
       featured: true
     },
-
     {
       id: "proj-3",
-      title: "Local Food Finder",
-      category: "Web Application",
-      subtitle:
-        "Web application for discovering local food places and exploring nearby options.",
-      description:
-        "A location-focused web project created to make discovering local food options easier through a simple and responsive user interface.",
-      image:
-        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop",
-      tags: [
-        "React",
-        "JavaScript",
-        "HTML",
-        "CSS",
-        "API"
-      ],
-      demoUrl: "https://github.com/Vivek-Badoni/",
-      githubUrl: "https://github.com/Vivek-Badoni/",
-      featured: false
+      title: "Student Registration System",
+      category: "PHP & MySQL",
+      subtitle: "Web-based system for managing student records with full CRUD operations.",
+      description: "Developed a database-backed web application to register, search, update, and manage student records with full CRUD functionality connected to a MySQL database.",
+      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
+      tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3", "CRUD"],
+      demoUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni",
+      featured: true
     },
-
     {
       id: "proj-4",
-      title: "Speech Recognition System",
-      category: "Python",
-      subtitle:
-        "Voice-based application using speech recognition technology.",
-      description:
-        "A Python-based speech recognition project that converts spoken input into text and demonstrates practical implementation of voice-based interaction.",
-      image:
-        "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=800&auto=format&fit=crop",
-      tags: [
-        "Python",
-        "Speech Recognition",
-        "AI",
-        "Automation"
-      ],
-      demoUrl: "https://github.com/Vivek-Badoni/",
-      githubUrl: "https://github.com/Vivek-Badoni/",
+      title: "Voice Desktop Assistant",
+      category: "Python & AI",
+      subtitle: "Voice-controlled desktop assistant executing speech-to-text automation tasks.",
+      description: "Built a Python-driven speech recognition application that converts spoken voice commands into text and executes automated system commands.",
+      image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=800&auto=format&fit=crop",
+      tags: ["Python", "Speech Recognition", "Voice AI", "Automation"],
+      demoUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni",
       featured: false
     },
-
     {
       id: "proj-5",
-      title: "Text Speeder Game",
-      category: "JavaScript",
-      subtitle:
-        "Interactive typing speed game designed to test and improve typing performance.",
-      description:
-        "A browser-based typing game featuring real-time text input, speed tracking and interactive gameplay built with frontend web technologies.",
-      image:
-        "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop",
-      tags: [
-        "JavaScript",
-        "HTML5",
-        "CSS3",
-        "Game Development"
-      ],
-      demoUrl: "https://github.com/Vivek-Badoni/",
-      githubUrl: "https://github.com/Vivek-Badoni/",
+      title: "Personal Portfolio Website",
+      category: "3D & React",
+      subtitle: "Modern, responsive 3D portfolio showcasing full-stack projects and interactive WebGL elements.",
+      description: "Designed and deployed a fully responsive personal portfolio site featuring Three.js WebGL rendering, custom audio effects, CLI terminal overlay, and dynamic theme switching.",
+      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop",
+      tags: ["HTML5", "CSS3", "JavaScript", "React", "Three.js", "WebGL"],
+      demoUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni",
       featured: false
-    }
-  ],
-
-  experience: [
-    {
-      period: "2026 - Present",
-      role: "Web Developer Intern / Trainee",
-      company: "Tulyarth Digiweb",
-      description:
-        "Working on practical web development projects and gaining hands-on experience with frontend and backend technologies, Laravel, PHP, JavaScript, responsive UI development and database-driven applications."
-    },
-
-    {
-      period: "2023 - 2026",
-      role: "B.Sc. IT Student & Developer",
-      company: "Uttaranchal University",
-      description:
-        "Pursuing B.Sc. Information Technology while developing projects across web development, Python, AI, databases and modern frontend technologies. Built academic and personal projects to strengthen full-stack development skills."
-    },
-
-    {
-      period: "2025 - 2026",
-      role: "Full-Stack Web Developer",
-      company: "Personal & Academic Projects",
-      description:
-        "Designed and developed multiple web applications using Laravel, PHP, MySQL, JavaScript, React and Bootstrap, including booking systems, admin dashboards, e-commerce applications and interactive web projects."
     }
   ]
 };

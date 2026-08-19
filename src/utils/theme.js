@@ -36,10 +36,12 @@ export const themes = {
 let currentThemeKey = 'cyber';
 let sceneManagerRef = null;
 let heroMeshRef = null;
+let cyberTerrainRef = null;
 
-export function initTheme(sceneManager, heroMesh) {
+export function initTheme(sceneManager, heroMesh, cyberTerrain = null) {
   sceneManagerRef = sceneManager;
   heroMeshRef = heroMesh;
+  cyberTerrainRef = cyberTerrain;
 
   const savedTheme = localStorage.getItem('portfolio_theme');
   if (savedTheme && themes[savedTheme]) {
@@ -67,6 +69,9 @@ export function setTheme(themeKey) {
   }
   if (sceneManagerRef) {
     sceneManagerRef.setThemeColors(theme.primary, theme.secondary);
+  }
+  if (cyberTerrainRef) {
+    cyberTerrainRef.setColorTheme(theme.primary, theme.secondary);
   }
 }
 
