@@ -30,8 +30,19 @@ export class SceneManager {
 
     // Event Listeners
     window.addEventListener('resize', this.onWindowResize.bind(this));
+    this.updateCameraForViewport();
 
     this.updatables = [];
+  }
+
+  updateCameraForViewport() {
+    if (this.width < 576) {
+      this.camera.position.z = 9.5;
+    } else if (this.width < 992) {
+      this.camera.position.z = 8.2;
+    } else {
+      this.camera.position.z = 7;
+    }
   }
 
   setupLighting() {
@@ -67,6 +78,8 @@ export class SceneManager {
   onWindowResize() {
     this.width = this.container.clientWidth;
     this.height = this.container.clientHeight;
+
+    this.updateCameraForViewport();
 
     this.camera.aspect = this.width / this.height;
     this.camera.updateProjectionMatrix();

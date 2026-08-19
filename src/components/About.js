@@ -13,20 +13,20 @@ export function renderAbout(container, data) {
           <p class="section-desc">Building digital web applications that combine modern full-stack development, clean UI aesthetics, and scalable backend architecture.</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start;">
-          <div class="glass-panel" style="padding: 36px;">
+        <div class="about-grid">
+          <div class="glass-panel philosophy-card">
             <h3 style="font-size: 1.5rem; margin-bottom: 16px;" class="text-gradient">Engineering Philosophy</h3>
             <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 24px;">
               I believe web applications should be visually engaging, responsive, and robust. By combining PHP/Laravel backend architecture with modern frontend JavaScript, MySQL databases, and clean UI design, I create software solutions that solve real-world problems.
             </p>
-            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-              <div style="padding: 10px 16px; background: rgba(0, 243, 255, 0.1); border-radius: 12px; font-family: var(--font-code); font-size: 0.85rem; color: var(--primary-cyan);">
+            <div class="philosophy-badges">
+              <div class="badge-item cyan">
                 ⚡ High-FPS WebGL Rendering
               </div>
-              <div style="padding: 10px 16px; background: rgba(157, 78, 221, 0.1); border-radius: 12px; font-family: var(--font-code); font-size: 0.85rem; color: var(--primary-purple);">
+              <div class="badge-item purple">
                 🛡️ Clean Code & Architecture
               </div>
-              <div style="padding: 10px 16px; background: rgba(0, 255, 157, 0.1); border-radius: 12px; font-family: var(--font-code); font-size: 0.85rem; color: var(--accent-emerald);">
+              <div class="badge-item emerald">
                 🎨 Cyber Glassmorphism UI
               </div>
             </div>
