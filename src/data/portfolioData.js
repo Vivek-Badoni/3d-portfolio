@@ -39,13 +39,13 @@ export const portfolioData = {
       color: "#9d4edd"
     },
     {
-      label: "Core Languages",
-      value: "Java, Python, C++, PHP",
+      label: "Languages & Stack",
+      value: "4+ Core",
       color: "#00ff9d"
     },
     {
-      label: "Graduation (B.Sc. IT)",
-      value: "May 2026",
+      label: "Graduation Year",
+      value: "2026",
       color: "#ffb703"
     }
   ],
