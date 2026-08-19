@@ -52,14 +52,13 @@ export function renderLab3D(container, heroMesh, sceneManager) {
             <div class="control-group">
               <label class="control-label">3D Mesh Shape</label>
               <div class="shape-btn-grid" style="grid-template-columns: repeat(4, 1fr);">
-                <button class="shape-btn active" data-shape="torusKnot" data-name="Torus Knot">Torus Knot</button>
-                <button class="shape-btn" data-shape="icosahedron" data-name="Icosahedron">Icosahedron</button>
-                <button class="shape-btn" data-shape="dodecahedron" data-name="Dodecahedron">Dodecahedron</button>
-                <button class="shape-btn" data-shape="octahedron" data-name="Octahedron">Octahedron</button>
-                <button class="shape-btn" data-shape="torus" data-name="Cyber Ring">Cyber Ring</button>
-                <button class="shape-btn" data-shape="cube" data-name="Cyber Cube">Cyber Cube</button>
-                <button class="shape-btn" data-shape="sphere" data-name="Sphere">Sphere</button>
-                <button class="shape-btn" data-shape="pyramid" data-name="Pyramid">Pyramid</button>
+                <button class="shape-btn active" data-shape="torusKnot" data-name="Torus Knot (Classic)">Torus Knot</button>
+                <button class="shape-btn" data-shape="quantumMatrix" data-name="Quantum Matrix">Quantum Matrix</button>
+                <button class="shape-btn" data-shape="cyberCrystal" data-name="Cyber Crystal">Cyber Crystal</button>
+                <button class="shape-btn" data-shape="tesseract" data-name="Hypercube Tesseract">Tesseract</button>
+                <button class="shape-btn" data-shape="pulsarCore" data-name="Pulsar Core">Pulsar Core</button>
+                <button class="shape-btn" data-shape="dnaHelix" data-name="DNA Helix">DNA Helix</button>
+                <button class="shape-btn" data-shape="stellarStar" data-name="Stellar Cyber Star">Stellar Star</button>
               </div>
             </div>
 

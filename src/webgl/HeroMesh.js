@@ -72,26 +72,23 @@ export class HeroMesh {
       case 'torusKnot':
         this.meshGeometry = new THREE.TorusKnotGeometry(1.35, 0.42, 128, 32, 2, 3);
         break;
-      case 'icosahedron':
-        this.meshGeometry = new THREE.IcosahedronGeometry(1.75, 1);
+      case 'quantumMatrix':
+        this.meshGeometry = new THREE.TorusKnotGeometry(1.4, 0.22, 200, 32, 3, 7);
         break;
-      case 'dodecahedron':
-        this.meshGeometry = new THREE.DodecahedronGeometry(1.65, 0);
+      case 'cyberCrystal':
+        this.meshGeometry = new THREE.ConeGeometry(1.65, 3.2, 6, 2);
         break;
-      case 'octahedron':
-        this.meshGeometry = new THREE.OctahedronGeometry(1.85, 0);
+      case 'tesseract':
+        this.meshGeometry = new THREE.BoxGeometry(2.0, 2.0, 2.0, 12, 12, 12);
         break;
-      case 'torus':
-        this.meshGeometry = new THREE.TorusGeometry(1.55, 0.48, 30, 100);
+      case 'pulsarCore':
+        this.meshGeometry = new THREE.IcosahedronGeometry(1.7, 4);
         break;
-      case 'cube':
-        this.meshGeometry = new THREE.BoxGeometry(2.1, 2.1, 2.1, 8, 8, 8);
+      case 'dnaHelix':
+        this.meshGeometry = new THREE.TorusKnotGeometry(1.3, 0.38, 180, 24, 4, 3);
         break;
-      case 'sphere':
-        this.meshGeometry = new THREE.SphereGeometry(1.75, 48, 48);
-        break;
-      case 'pyramid':
-        this.meshGeometry = new THREE.ConeGeometry(1.9, 2.5, 4);
+      case 'stellarStar':
+        this.meshGeometry = new THREE.TetrahedronGeometry(1.9, 2);
         break;
       default:
         this.meshGeometry = new THREE.TorusKnotGeometry(1.35, 0.42, 128, 32);
