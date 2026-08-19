@@ -380,14 +380,13 @@ export class HeroMesh {
       if (this.innerMesh) this.innerMesh.scale.set(1.07, 1.07, 1.07);
     }
 
-    // Position offset to align 3D mesh cleanly to right side on desktop so Hero text is 100% visible!
-    const isDesktop = window.innerWidth > 992;
-    const targetX = isDesktop ? 3.6 : 0;
-    const targetY = isDesktop ? 0 : 0.8;
-    const targetScale = isDesktop ? 0.85 : 0.7;
+    // Centered Full-Size 3D Mesh Position
+    const targetX = 0;
+    const targetY = Math.sin(t * 1.5) * (this.warpMode ? 0.35 : 0.2);
+    const targetScale = 1.0;
 
     this.group.position.x += (targetX - this.group.position.x) * 0.08;
-    this.group.position.y += (targetY + Math.sin(t * 1.5) * (this.warpMode ? 0.35 : 0.2) - this.group.position.y) * 0.08;
+    this.group.position.y += (targetY - this.group.position.y) * 0.08;
     this.group.scale.set(targetScale, targetScale, targetScale);
   }
 }
