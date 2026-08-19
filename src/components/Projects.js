@@ -104,6 +104,51 @@ function attachCardEvents(container, data) {
   });
 
   // Modal handlers
+  const projectSnippets = {
+    'proj-1': `// Python / Flask - ATS Scoring Engine
+@app.route('/api/evaluate-ats', methods=['POST'])
+def evaluate_resume():
+    file = request.files['resume']
+    text = extract_text_from_pdf(file)
+    scores = calculate_ats_score(text, target_role="Full-Stack Developer")
+    return jsonify({
+        "ats_score": scores['total'],
+        "skill_gaps": scores['gaps'],
+        "sections": ["Header", "Skills", "Experience", "Projects", "Education"]
+    })`,
+    'proj-2': `// Laravel / PHP - Protected Middleware Auth Controller
+public function login(Request $request) {
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
+    if (Auth::attempt($credentials, $request->remember)) {
+        $request->session()->regenerate();
+        return redirect()->intended('dashboard');
+    }
+    return back()->withErrors(['email' => 'Invalid credentials']);
+}`,
+    'proj-3': `// PHP / MySQL - Student Registration CRUD
+$stmt = $pdo->prepare("INSERT INTO students (name, email, course, created_at) VALUES (?, ?, ?, NOW())");
+$stmt->execute([$name, $email, $course]);
+header("Location: dashboard.php?status=registered_success");`,
+    'proj-4': `# Python - Speech Recognition Voice Command
+import speech_recognition as sr
+
+def listen_command():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = recognizer.listen(source)
+        command = recognizer.recognize_google(audio)
+        return command.lower()`,
+    'proj-5': `// Three.js / WebGL - Particle Mesh Rotation Loop
+function animate(time) {
+  mesh.rotation.y += 0.005;
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}`
+  };
+
   const openBtns = container.querySelectorAll('.open-modal-btn');
   openBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -113,21 +158,59 @@ function attachCardEvents(container, data) {
       const proj = data.projects.find(p => p.id === projId);
 
       if (proj) {
+        const snippet = projectSnippets[projId] || projectSnippets['proj-1'];
         modalBody.innerHTML = `
           <button class="modal-close-btn" id="close-modal-btn">&times;</button>
-          <img src="${proj.image}" alt="${proj.title}" style="width: 100%; height: 260px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 24px;">
-          <h2 style="font-size: 1.8rem; margin-bottom: 8px;" class="text-gradient">${proj.title}</h2>
-          <div style="color: var(--primary-cyan); font-family: var(--font-code); font-size: 0.9rem; margin-bottom: 16px;">Category: ${proj.category}</div>
-          <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; font-size: 1.05rem;">${proj.description}</p>
-          <div class="project-tags" style="margin-bottom: 32px;">
-            ${proj.tags.map(t => `<span class="tag" style="padding: 6px 16px; font-size: 0.85rem;">${t}</span>`).join('')}
+          <img src="${proj.image}" alt="${proj.title}" style="width: 100%; height: 240px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 20px;">
+          <h2 style="font-size: 1.8rem; margin-bottom: 4px;" class="text-gradient">${proj.title}</h2>
+          <div style="color: var(--primary-cyan); font-family: var(--font-code); font-size: 0.88rem; margin-bottom: 16px;">Category: ${proj.category}</div>
+          
+          <div class="resume-tabs" style="margin-bottom: 18px;">
+            <button class="resume-tab-btn active" id="proj-tab-btn-overview">Project Overview</button>
+            <button class="resume-tab-btn" id="proj-tab-btn-code">Source Code Snippet</button>
           </div>
-          <div style="display: flex; gap: 16px;">
-            <a href="${proj.demoUrl}" target="_blank" class="btn btn-primary">Live Demo</a>
-            <a href="${proj.githubUrl}" target="_blank" class="btn btn-glass">Source Code</a>
+
+          <div id="proj-content-overview">
+            <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; font-size: 1rem;">${proj.description}</p>
+            <div class="project-tags" style="margin-bottom: 24px;">
+              ${proj.tags.map(t => `<span class="tag" style="padding: 6px 16px; font-size: 0.85rem;">${t}</span>`).join('')}
+            </div>
+          </div>
+
+          <div id="proj-content-code" style="display: none;">
+            <div style="background: rgba(5,7,18,0.9); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); margin-bottom: 24px;">
+              <pre style="font-family: var(--font-code); color: var(--accent-emerald); font-size: 0.85rem; overflow-x: auto; white-space: pre-wrap;">${escapeHtml(snippet)}</pre>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a href="${proj.demoUrl}" target="_blank" class="btn btn-primary">Live Demo / Repo</a>
+            <a href="${proj.githubUrl}" target="_blank" class="btn btn-glass">GitHub Repository</a>
           </div>
         `;
         modal.classList.add('active');
+
+        // Tab switching logic
+        const tabOverview = modalBody.querySelector('#proj-tab-btn-overview');
+        const tabCode = modalBody.querySelector('#proj-tab-btn-code');
+        const contentOverview = modalBody.querySelector('#proj-content-overview');
+        const contentCode = modalBody.querySelector('#proj-content-code');
+
+        tabOverview.addEventListener('click', () => {
+          soundFx.playClickSound();
+          tabOverview.classList.add('active');
+          tabCode.classList.remove('active');
+          contentOverview.style.display = 'block';
+          contentCode.style.display = 'none';
+        });
+
+        tabCode.addEventListener('click', () => {
+          soundFx.playClickSound();
+          tabCode.classList.add('active');
+          tabOverview.classList.remove('active');
+          contentOverview.style.display = 'none';
+          contentCode.style.display = 'block';
+        });
 
         modalBody.querySelector('#close-modal-btn').addEventListener('click', () => {
           soundFx.playClickSound();
@@ -141,5 +224,11 @@ function attachCardEvents(container, data) {
     if (e.target === modal) {
       modal.classList.remove('active');
     }
+  });
+}
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, function(m) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
   });
 }

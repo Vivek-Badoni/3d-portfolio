@@ -1,6 +1,8 @@
 class SoundEffectsSynth {
   constructor() {
     this.enabled = true;
+    this.ambientEnabled = false;
+    this.ambientNodes = [];
     this.ctx = null;
   }
 
@@ -20,8 +22,59 @@ class SoundEffectsSynth {
     this.enabled = !this.enabled;
     if (this.enabled) {
       this.playChime();
+    } else if (this.ambientEnabled) {
+      this.stopAmbientMusic();
     }
     return this.enabled;
+  }
+
+  toggleAmbientMusic() {
+    this.initContext();
+    this.ambientEnabled = !this.ambientEnabled;
+    if (this.ambientEnabled) {
+      this.startAmbientMusic();
+    } else {
+      this.stopAmbientMusic();
+    }
+    return this.ambientEnabled;
+  }
+
+  startAmbientMusic() {
+    if (!this.ctx || this.ambientNodes.length > 0) return;
+
+    try {
+      const freqs = [110.00, 164.81, 220.00, 329.63]; // A2, E3, A3, E4 sci-fi pad
+      freqs.forEach((freq) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+        gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.025, this.ctx.currentTime + 3.0);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+
+        this.ambientNodes.push({ osc, gain });
+      });
+    } catch (e) {}
+  }
+
+  stopAmbientMusic() {
+    this.ambientNodes.forEach(node => {
+      try {
+        node.gain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 1.0);
+        setTimeout(() => {
+          node.osc.stop();
+          node.osc.disconnect();
+        }, 1000);
+      } catch (e) {}
+    });
+    this.ambientNodes = [];
+    this.ambientEnabled = false;
   }
 
   playHoverSound() {

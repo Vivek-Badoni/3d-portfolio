@@ -28,11 +28,42 @@ export class SceneManager {
     // Lighting Setup
     this.setupLighting();
 
+    // Pointer Drag Orbit Setup
+    this.isDragging = false;
+    this.previousPointerPosition = { x: 0, y: 0 };
+    this.orbitAngles = { x: 0, y: 0 };
+
+    this.initOrbitDrag();
+
     // Event Listeners
     window.addEventListener('resize', this.onWindowResize.bind(this));
     this.updateCameraForViewport();
 
     this.updatables = [];
+  }
+
+  initOrbitDrag() {
+    window.addEventListener('pointerdown', (e) => {
+      // Don't drag if clicking buttons, links, or inputs
+      if (e.target.closest('button, a, input, textarea, .glass-panel, .terminal-window, .modal-content')) return;
+      this.isDragging = true;
+      this.previousPointerPosition = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!this.isDragging) return;
+      const deltaX = e.clientX - this.previousPointerPosition.x;
+      const deltaY = e.clientY - this.previousPointerPosition.y;
+
+      this.orbitAngles.y += deltaX * 0.005;
+      this.orbitAngles.x += deltaY * 0.005;
+
+      this.previousPointerPosition = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('pointerup', () => {
+      this.isDragging = false;
+    });
   }
 
   updateCameraForViewport() {
@@ -94,6 +125,13 @@ export class SceneManager {
         item.update(time);
       }
     });
+
+    // Apply Orbit Drag Rotation to Camera Position
+    const baseZ = (this.width < 576) ? 9.5 : (this.width < 992 ? 8.2 : 7.0);
+    this.camera.position.x = Math.sin(this.orbitAngles.y) * baseZ;
+    this.camera.position.z = Math.cos(this.orbitAngles.y) * baseZ;
+    this.camera.position.y = Math.sin(this.orbitAngles.x) * 3;
+    this.camera.lookAt(0, 0, 0);
 
     // Slow orbiting lights animation
     const t = time * 0.001;

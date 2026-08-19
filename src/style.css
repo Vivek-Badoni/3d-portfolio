@@ -962,10 +962,24 @@ h5 {
 }
 
 /* Skills Section */
+.skills-main-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.radar-chart-box {
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
 }
 
 .skills-category {
@@ -1374,7 +1388,8 @@ h5 {
   .hero-grid,
   .about-grid,
   .lab-grid,
-  .contact-grid {
+  .contact-grid,
+  .skills-main-layout {
     grid-template-columns: 1fr;
     gap: 32px;
   }
