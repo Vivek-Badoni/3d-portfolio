@@ -10,6 +10,8 @@ export class HeroMesh {
     this.currentShapeType = 'torusKnot';
     this.wireframeMode = false;
     this.rotationSpeed = 1.0;
+    this.pulseMode = false;
+    this.warpMode = false;
 
     // Create Main Mesh
     this.meshMaterial = new THREE.MeshPhysicalMaterial({
@@ -61,6 +63,15 @@ export class HeroMesh {
       case 'icosahedron':
         this.meshGeometry = new THREE.IcosahedronGeometry(1.8, 1);
         break;
+      case 'dodecahedron':
+        this.meshGeometry = new THREE.DodecahedronGeometry(1.7, 0);
+        break;
+      case 'octahedron':
+        this.meshGeometry = new THREE.OctahedronGeometry(1.9, 0);
+        break;
+      case 'torus':
+        this.meshGeometry = new THREE.TorusGeometry(1.6, 0.5, 30, 100);
+        break;
       case 'cube':
         this.meshGeometry = new THREE.BoxGeometry(2.2, 2.2, 2.2, 8, 8, 8);
         break;
@@ -94,6 +105,95 @@ export class HeroMesh {
     });
 
     this.triggerParticleExplosion();
+  }
+
+  getGeometryStats() {
+    if (!this.meshGeometry) return { vertices: 0, faces: 0 };
+    const pos = this.meshGeometry.attributes.position;
+    const count = pos ? pos.count : 0;
+    const index = this.meshGeometry.index;
+    const faces = index ? index.count / 3 : count / 3;
+    return { vertices: count, faces: Math.round(faces) };
+  }
+
+  setPulseMode(enabled) {
+    this.pulseMode = enabled;
+  }
+
+  setWarpMode(enabled) {
+    this.warpMode = enabled;
+  }
+
+  triggerDisintegrate() {
+    // Explode into 300 particle nodes and assemble back
+    const burstCount = 300;
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(burstCount * 3);
+    const velocities = [];
+
+    for (let i = 0; i < burstCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 1.5;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 1.5;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
+
+      velocities.push(
+        (Math.random() - 0.5) * 0.25,
+        (Math.random() - 0.5) * 0.25,
+        (Math.random() - 0.5) * 0.25
+      );
+    }
+
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+      color: 0x00f3ff,
+      size: 0.14,
+      transparent: true,
+      opacity: 1
+    });
+
+    const burstPoints = new THREE.Points(geo, mat);
+    this.scene.add(burstPoints);
+
+    // Shrink main mesh out
+    gsap.to(this.group.scale, {
+      x: 0.05,
+      y: 0.05,
+      z: 0.05,
+      duration: 0.4,
+      ease: "power2.in"
+    });
+
+    gsap.to(mat, {
+      opacity: 0,
+      duration: 1.2,
+      ease: "power2.out",
+      onUpdate: () => {
+        const posAttr = geo.attributes.position;
+        for (let i = 0; i < burstCount; i++) {
+          posAttr.setXYZ(
+            i,
+            posAttr.getX(i) + velocities[i * 3],
+            posAttr.getY(i) + velocities[i * 3 + 1],
+            posAttr.getZ(i) + velocities[i * 3 + 2]
+          );
+        }
+        posAttr.needsUpdate = true;
+      },
+      onComplete: () => {
+        this.scene.remove(burstPoints);
+        geo.dispose();
+        mat.dispose();
+
+        // Re-assemble scale back in
+        gsap.to(this.group.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 1.0,
+          ease: "elastic.out(1, 0.4)"
+        });
+      }
+    });
   }
 
   triggerParticleExplosion() {
@@ -205,18 +305,33 @@ export class HeroMesh {
   }
 
   update(time) {
-    const t = time * 0.001 * this.rotationSpeed;
+    const effectiveSpeed = this.warpMode ? this.rotationSpeed * 3.5 : this.rotationSpeed;
+    const t = time * 0.001 * effectiveSpeed;
 
     // Smooth rotation
-    this.group.rotation.x += (this.targetRotation.x - this.group.rotation.x) * 0.05 + 0.002 * this.rotationSpeed;
-    this.group.rotation.y += (this.targetRotation.y - this.group.rotation.y) * 0.05 + 0.005 * this.rotationSpeed;
+    this.group.rotation.x += (this.targetRotation.x - this.group.rotation.x) * 0.05 + 0.002 * effectiveSpeed;
+    this.group.rotation.y += (this.targetRotation.y - this.group.rotation.y) * 0.05 + 0.005 * effectiveSpeed;
 
-    if (this.ringPoints) {
-      this.ringPoints.rotation.z = -t * 0.5;
-      this.ringPoints.rotation.y = t * 0.3;
+    if (this.warpMode) {
+      this.group.rotation.z += 0.02;
     }
 
-    // Subtle floating levitation bobbing
-    this.group.position.y = Math.sin(t * 1.5) * 0.18;
+    if (this.ringPoints) {
+      this.ringPoints.rotation.z = -t * (this.warpMode ? 1.5 : 0.5);
+      this.ringPoints.rotation.y = t * (this.warpMode ? 1.2 : 0.3);
+    }
+
+    // Pulse mode scale modulation
+    if (this.pulseMode) {
+      const pulseScale = 1 + Math.sin(time * 0.005) * 0.18;
+      this.mainMesh.scale.set(pulseScale, pulseScale, pulseScale);
+      if (this.innerMesh) this.innerMesh.scale.set(pulseScale * 1.08, pulseScale * 1.08, pulseScale * 1.08);
+    } else {
+      this.mainMesh.scale.set(1, 1, 1);
+      if (this.innerMesh) this.innerMesh.scale.set(1.08, 1.08, 1.08);
+    }
+
+    // Floating levitation bobbing
+    this.group.position.y = Math.sin(t * 1.5) * (this.warpMode ? 0.35 : 0.18);
   }
 }

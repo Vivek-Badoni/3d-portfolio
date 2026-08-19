@@ -10,7 +10,7 @@ export function renderLab3D(container, heroMesh, sceneManager) {
             <span>Interactive Playground</span>
           </div>
           <h2 class="section-title">3D WebGL <span class="text-gradient">Control Lab</span></h2>
-          <p class="section-desc">Customize the interactive 3D WebGL viewport in real-time. Switch geometries, toggle wireframes, adjust orbital speeds, and morph color themes.</p>
+          <p class="section-desc">Customize the interactive 3D WebGL viewport in real-time. Switch geometries, trigger disintegration physics, toggle pulse modes, and morph color themes.</p>
         </div>
 
         <div class="lab-grid">
@@ -30,6 +30,10 @@ export function renderLab3D(container, heroMesh, sceneManager) {
                 <span class="telemetry-value" id="lab-speed-val">1.0x</span>
               </div>
               <div class="telemetry-item">
+                <span class="telemetry-label">Vertices:</span>
+                <span class="telemetry-value" id="lab-vert-val" style="color: var(--primary-cyan);">4,096</span>
+              </div>
+              <div class="telemetry-item">
                 <span class="telemetry-label">Wireframe:</span>
                 <span class="telemetry-value" id="lab-wf-val" style="color: var(--text-dim);">OFF</span>
               </div>
@@ -47,18 +51,37 @@ export function renderLab3D(container, heroMesh, sceneManager) {
             <!-- Geometry Selector -->
             <div class="control-group">
               <label class="control-label">3D Mesh Shape</label>
-              <div class="shape-btn-grid">
+              <div class="shape-btn-grid" style="grid-template-columns: repeat(4, 1fr);">
                 <button class="shape-btn active" data-shape="torusKnot" data-name="Torus Knot">Torus Knot</button>
                 <button class="shape-btn" data-shape="icosahedron" data-name="Icosahedron">Icosahedron</button>
+                <button class="shape-btn" data-shape="dodecahedron" data-name="Dodecahedron">Dodecahedron</button>
+                <button class="shape-btn" data-shape="octahedron" data-name="Octahedron">Octahedron</button>
+                <button class="shape-btn" data-shape="torus" data-name="Cyber Ring">Cyber Ring</button>
                 <button class="shape-btn" data-shape="cube" data-name="Cyber Cube">Cyber Cube</button>
                 <button class="shape-btn" data-shape="sphere" data-name="Sphere">Sphere</button>
                 <button class="shape-btn" data-shape="pyramid" data-name="Pyramid">Pyramid</button>
               </div>
             </div>
 
+            <!-- Animation FX Controls -->
+            <div class="control-group">
+              <label class="control-label">Animation FX & Shaders</label>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn btn-glass" id="pulse-btn" style="flex: 1; justify-content: center; padding: 8px 12px; font-size: 0.82rem;">
+                  💓 Pulse Core: OFF
+                </button>
+                <button class="btn btn-glass" id="warp-btn" style="flex: 1; justify-content: center; padding: 8px 12px; font-size: 0.82rem;">
+                  ⚡ Hyper Warp: OFF
+                </button>
+              </div>
+              <button class="btn btn-primary" id="disintegrate-btn" style="width: 100%; justify-content: center; padding: 10px; margin-top: 8px; font-size: 0.88rem;">
+                💥 Disintegrate & Re-assemble
+              </button>
+            </div>
+
             <!-- Wireframe Toggle -->
             <div class="control-group">
-              <label class="control-label">Wireframe Shader</label>
+              <label class="control-label">Wireframe Mode</label>
               <button class="btn btn-glass" id="wireframe-toggle-btn" style="width: 100%; justify-content: center; padding: 10px;">
                 Toggle Wireframe: OFF
               </button>
@@ -92,6 +115,16 @@ export function renderLab3D(container, heroMesh, sceneManager) {
   const speedVal = container.querySelector('#lab-speed-val');
   const speedLabelBadge = container.querySelector('#speed-label-badge');
   const wfVal = container.querySelector('#lab-wf-val');
+  const vertVal = container.querySelector('#lab-vert-val');
+
+  function updateTelemetryStats() {
+    if (heroMesh && vertVal) {
+      const stats = heroMesh.getGeometryStats();
+      vertVal.textContent = stats.vertices.toLocaleString();
+    }
+  }
+
+  updateTelemetryStats();
 
   // Attach shape button handlers
   const shapeBtns = container.querySelectorAll('.shape-btn');
@@ -105,7 +138,36 @@ export function renderLab3D(container, heroMesh, sceneManager) {
       const shapeName = btn.getAttribute('data-name');
       heroMesh.buildGeometry(shapeType);
       if (shapeVal) shapeVal.textContent = shapeName;
+      updateTelemetryStats();
     });
+  });
+
+  // Pulse & Warp toggles
+  let isPulse = false;
+  const pulseBtn = container.querySelector('#pulse-btn');
+  pulseBtn.addEventListener('click', () => {
+    soundFx.playClickSound();
+    isPulse = !isPulse;
+    heroMesh.setPulseMode(isPulse);
+    pulseBtn.textContent = `💓 Pulse Core: ${isPulse ? 'ON' : 'OFF'}`;
+    pulseBtn.style.borderColor = isPulse ? 'var(--primary-cyan)' : 'var(--glass-border)';
+  });
+
+  let isWarp = false;
+  const warpBtn = container.querySelector('#warp-btn');
+  warpBtn.addEventListener('click', () => {
+    soundFx.playClickSound();
+    isWarp = !isWarp;
+    heroMesh.setWarpMode(isWarp);
+    warpBtn.textContent = `⚡ Hyper Warp: ${isWarp ? 'ON' : 'OFF'}`;
+    warpBtn.style.borderColor = isWarp ? 'var(--accent-coral)' : 'var(--glass-border)';
+  });
+
+  // Disintegrate FX Trigger
+  const disintegrateBtn = container.querySelector('#disintegrate-btn');
+  disintegrateBtn.addEventListener('click', () => {
+    soundFx.playChime();
+    heroMesh.triggerDisintegrate();
   });
 
   // Attach wireframe toggle
