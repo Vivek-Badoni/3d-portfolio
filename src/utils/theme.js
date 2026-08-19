@@ -5,7 +5,19 @@ export const themes = {
     secondary: '#9d4edd',
     accent: '#00ff9d',
     bgDark: '#070814',
-    bgCard: 'rgba(15, 17, 36, 0.65)'
+    bgCard: 'rgba(15, 17, 36, 0.65)',
+    textMain: '#f8fafc',
+    textMuted: '#94a3b8'
+  },
+  light: {
+    name: 'Daylight Cyber (Light)',
+    primary: '#0066ff',
+    secondary: '#8800ff',
+    accent: '#00b86b',
+    bgDark: '#f4f6fa',
+    bgCard: 'rgba(255, 255, 255, 0.88)',
+    textMain: '#0f172a',
+    textMuted: '#334155'
   },
   synthwave: {
     name: 'Synthwave Sunset',
@@ -13,7 +25,9 @@ export const themes = {
     secondary: '#ffb703',
     accent: '#00f3ff',
     bgDark: '#120719',
-    bgCard: 'rgba(32, 14, 45, 0.65)'
+    bgCard: 'rgba(32, 14, 45, 0.65)',
+    textMain: '#f8fafc',
+    textMuted: '#94a3b8'
   },
   matrix: {
     name: 'Matrix Emerald',
@@ -21,7 +35,9 @@ export const themes = {
     secondary: '#00f3ff',
     accent: '#ffb703',
     bgDark: '#04120a',
-    bgCard: 'rgba(10, 32, 20, 0.65)'
+    bgCard: 'rgba(10, 32, 20, 0.65)',
+    textMain: '#f8fafc',
+    textMuted: '#94a3b8'
   },
   solar: {
     name: 'Solar Flare',
@@ -29,7 +45,9 @@ export const themes = {
     secondary: '#ff477e',
     accent: '#00ff9d',
     bgDark: '#1a0f04',
-    bgCard: 'rgba(40, 22, 10, 0.65)'
+    bgCard: 'rgba(40, 22, 10, 0.65)',
+    textMain: '#f8fafc',
+    textMuted: '#94a3b8'
   }
 };
 
@@ -62,6 +80,20 @@ export function setTheme(themeKey) {
   root.style.setProperty('--primary-cyan', theme.primary);
   root.style.setProperty('--primary-purple', theme.secondary);
   root.style.setProperty('--accent-emerald', theme.accent);
+  root.style.setProperty('--bg-dark', theme.bgDark);
+  root.style.setProperty('--bg-card', theme.bgCard);
+  root.style.setProperty('--text-main', theme.textMain);
+  root.style.setProperty('--text-muted', theme.textMuted);
+
+  if (themeKey === 'light') {
+    root.style.setProperty('--glass-border', 'rgba(0, 102, 255, 0.25)');
+    root.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.85)');
+    document.body.classList.add('light-mode');
+  } else {
+    root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.12)');
+    root.style.setProperty('--glass-bg', 'rgba(15, 17, 36, 0.65)');
+    document.body.classList.remove('light-mode');
+  }
 
   // Update 3D WebGL Scene colors if initialized
   if (heroMeshRef) {

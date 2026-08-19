@@ -39,7 +39,10 @@ export function renderNavbar(container, data, callbacks = {}) {
             </button>
             <div class="theme-dropdown-menu" id="theme-dropdown-menu">
               <button class="theme-option" data-theme="cyber">
-                <span class="swatch-dot" style="background: #00f3ff;"></span> Cyber Cyan
+                <span class="swatch-dot" style="background: #00f3ff;"></span> Cyber Cyan (Dark)
+              </button>
+              <button class="theme-option" data-theme="light">
+                <span class="swatch-dot" style="background: #0066ff;"></span> Daylight Cyber (Light)
               </button>
               <button class="theme-option" data-theme="synthwave">
                 <span class="swatch-dot" style="background: #ff477e;"></span> Synthwave Sunset
