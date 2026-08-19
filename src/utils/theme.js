@@ -6,8 +6,9 @@ export const themes = {
     accent: '#00ff9d',
     bgDark: '#070814',
     bgCard: 'rgba(15, 17, 36, 0.65)',
-    textMain: '#f8fafc',
-    textMuted: '#94a3b8'
+    textMain: '#ffffff',
+    textMuted: '#e2e8f0',
+    textDim: '#cbd5e1'
   },
   light: {
     name: 'Daylight Cyber (Light)',
@@ -17,7 +18,8 @@ export const themes = {
     bgDark: '#f4f6fa',
     bgCard: 'rgba(255, 255, 255, 0.88)',
     textMain: '#0f172a',
-    textMuted: '#334155'
+    textMuted: '#334155',
+    textDim: '#475569'
   },
   synthwave: {
     name: 'Synthwave Sunset',
@@ -26,8 +28,9 @@ export const themes = {
     accent: '#00f3ff',
     bgDark: '#120719',
     bgCard: 'rgba(32, 14, 45, 0.65)',
-    textMain: '#f8fafc',
-    textMuted: '#94a3b8'
+    textMain: '#ffffff',
+    textMuted: '#e2e8f0',
+    textDim: '#cbd5e1'
   },
   matrix: {
     name: 'Matrix Emerald',
@@ -36,8 +39,9 @@ export const themes = {
     accent: '#ffb703',
     bgDark: '#04120a',
     bgCard: 'rgba(10, 32, 20, 0.65)',
-    textMain: '#f8fafc',
-    textMuted: '#94a3b8'
+    textMain: '#ffffff',
+    textMuted: '#e2e8f0',
+    textDim: '#cbd5e1'
   },
   solar: {
     name: 'Solar Flare',
@@ -46,8 +50,9 @@ export const themes = {
     accent: '#00ff9d',
     bgDark: '#1a0f04',
     bgCard: 'rgba(40, 22, 10, 0.65)',
-    textMain: '#f8fafc',
-    textMuted: '#94a3b8'
+    textMain: '#ffffff',
+    textMuted: '#e2e8f0',
+    textDim: '#cbd5e1'
   }
 };
 
@@ -84,6 +89,7 @@ export function setTheme(themeKey) {
   root.style.setProperty('--bg-card', theme.bgCard);
   root.style.setProperty('--text-main', theme.textMain);
   root.style.setProperty('--text-muted', theme.textMuted);
+  root.style.setProperty('--text-dim', theme.textDim);
 
   if (themeKey === 'light') {
     root.style.setProperty('--glass-border', 'rgba(0, 102, 255, 0.25)');
