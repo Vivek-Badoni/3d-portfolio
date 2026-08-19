@@ -1,6 +1,7 @@
 import './style.css';
 import { portfolioData } from './data/portfolioData.js';
 import { initCustomCursor } from './utils/cursor.js';
+import { initTheme, setTheme } from './utils/theme.js';
 
 import { SceneManager } from './webgl/SceneManager.js';
 import { StarField } from './webgl/StarField.js';
@@ -16,6 +17,9 @@ import { renderSkills } from './components/Skills.js';
 import { renderContact } from './components/Contact.js';
 import { renderFooter } from './components/Footer.js';
 
+import { renderTerminalModal } from './components/Terminal.js';
+import { renderResumeModal } from './components/ResumeModal.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize Custom Magnetic Cursor
   initCustomCursor();
@@ -29,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const heroMesh = new HeroMesh(sceneManager.scene);
   sceneManager.addUpdatable(heroMesh);
+
+  // Initialize Theme System & WebGL Sync
+  initTheme(sceneManager, heroMesh);
 
   // Mouse Parallax for WebGL Mesh & Camera
   new MouseParallax((x, y) => {
@@ -44,9 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   requestAnimationFrame(animate);
 
-  // 3. Render Component Views
-  renderNavbar(document.getElementById('nav-root'), portfolioData);
-  renderHero(document.getElementById('hero-root'), portfolioData);
+  // 3. Render Modals & Overlays
+  const terminalController = renderTerminalModal(document.getElementById('terminal-root'), portfolioData);
+  const resumeController = renderResumeModal(document.getElementById('resume-root'), portfolioData);
+
+  // 4. Render Component Views with Callbacks
+  renderNavbar(document.getElementById('nav-root'), portfolioData, {
+    openTerminal: () => terminalController.open(),
+    onSelectTheme: (themeKey) => setTheme(themeKey)
+  });
+
+  renderHero(document.getElementById('hero-root'), portfolioData, {
+    openResume: () => resumeController.open()
+  });
+
   renderAbout(document.getElementById('about-root'), portfolioData);
   renderLab3D(document.getElementById('lab-root'), heroMesh, sceneManager);
   renderProjects(document.getElementById('projects-root'), portfolioData);
@@ -54,7 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderContact(document.getElementById('contact-root'), portfolioData);
   renderFooter(document.getElementById('footer-root'), portfolioData);
 
-  // 4. Setup Scroll Spy for Navbar highlighting
+  // 5. Global Keyboard Shortcuts (~ or Ctrl+K for Terminal CLI)
+  window.addEventListener('keydown', (e) => {
+    if (e.key === '`' || e.key === '~' || (e.ctrlKey && e.key.toLowerCase() === 'k')) {
+      e.preventDefault();
+      terminalController.open();
+    }
+  });
+
+  // 6. Setup Scroll Spy for Navbar highlighting
   setupScrollSpy();
 });
 

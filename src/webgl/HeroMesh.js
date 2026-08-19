@@ -92,6 +92,61 @@ export class HeroMesh {
       duration: 1.2,
       ease: "elastic.out(1, 0.5)"
     });
+
+    this.triggerParticleExplosion();
+  }
+
+  triggerParticleExplosion() {
+    const burstCount = 120;
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(burstCount * 3);
+    const velocities = [];
+
+    for (let i = 0; i < burstCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 0.5;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+
+      velocities.push(
+        (Math.random() - 0.5) * 0.12,
+        (Math.random() - 0.5) * 0.12,
+        (Math.random() - 0.5) * 0.12
+      );
+    }
+
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+      color: 0x00f3ff,
+      size: 0.12,
+      transparent: true,
+      opacity: 1
+    });
+
+    const burstPoints = new THREE.Points(geo, mat);
+    this.scene.add(burstPoints);
+
+    gsap.to(mat, {
+      opacity: 0,
+      duration: 0.9,
+      ease: "power2.out",
+      onUpdate: () => {
+        const posAttr = geo.attributes.position;
+        for (let i = 0; i < burstCount; i++) {
+          posAttr.setXYZ(
+            i,
+            posAttr.getX(i) + velocities[i * 3],
+            posAttr.getY(i) + velocities[i * 3 + 1],
+            posAttr.getZ(i) + velocities[i * 3 + 2]
+          );
+        }
+        posAttr.needsUpdate = true;
+      },
+      onComplete: () => {
+        this.scene.remove(burstPoints);
+        geo.dispose();
+        mat.dispose();
+      }
+    });
   }
 
   createOrbitalRing() {

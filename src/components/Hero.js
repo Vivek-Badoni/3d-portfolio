@@ -1,6 +1,6 @@
 import { soundFx } from '../utils/audio.js';
 
-export function renderHero(container, data) {
+export function renderHero(container, data, callbacks = {}) {
   container.innerHTML = `
     <section class="hero-section" id="hero">
       <div class="container">
@@ -26,10 +26,10 @@ export function renderHero(container, data) {
                 <span>Explore Projects</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </a>
-              <a href="#lab" class="btn btn-glass" id="open-lab-btn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                <span>Launch 3D Lab</span>
-              </a>
+              <button class="btn btn-glass" id="open-resume-hero-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>View Resume</span>
+              </button>
             </div>
 
             <div class="stats-grid">
@@ -53,6 +53,15 @@ export function renderHero(container, data) {
     b.addEventListener('mouseenter', () => soundFx.playHoverSound());
     b.addEventListener('click', () => soundFx.playClickSound());
   });
+
+  const resumeBtn = container.querySelector('#open-resume-hero-btn');
+  if (resumeBtn) {
+    resumeBtn.addEventListener('click', () => {
+      if (callbacks.openResume) {
+        callbacks.openResume();
+      }
+    });
+  }
 
   // Initialize Typewriter Effect
   initTypewriter(container.querySelector('#typewriter-text'), data.personalInfo.taglines);

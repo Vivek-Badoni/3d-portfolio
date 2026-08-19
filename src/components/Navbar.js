@@ -1,6 +1,6 @@
 import { soundFx } from '../utils/audio.js';
 
-export function renderNavbar(container, data) {
+export function renderNavbar(container, data, callbacks = {}) {
   const initials = data.personalInfo.initials || data.personalInfo.name.split(' ').map(n => n[0]).join('').toUpperCase();
   const firstName = data.personalInfo.name.split(' ')[0];
 
@@ -27,9 +27,36 @@ export function renderNavbar(container, data) {
         </ul>
 
         <div class="nav-controls">
+          <!-- Terminal CLI Toggle -->
+          <button class="icon-btn" id="terminal-toggle-btn" title="Open Cyber Terminal CLI (~ or Ctrl+K)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          </button>
+
+          <!-- Theme Palette Selector -->
+          <div class="theme-dropdown-wrapper">
+            <button class="icon-btn" id="theme-toggle-btn" title="Select Theme Palette">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.75 1.7-1.68 0-.44-.17-.86-.44-1.18-.28-.33-.44-.75-.44-1.18 0-.93.77-1.68 1.7-1.68H16c3.3 0 6-2.7 6-6 0-5.5-4.5-10-10-10z"/></svg>
+            </button>
+            <div class="theme-dropdown-menu" id="theme-dropdown-menu">
+              <button class="theme-option" data-theme="cyber">
+                <span class="swatch-dot" style="background: #00f3ff;"></span> Cyber Cyan
+              </button>
+              <button class="theme-option" data-theme="synthwave">
+                <span class="swatch-dot" style="background: #ff477e;"></span> Synthwave Sunset
+              </button>
+              <button class="theme-option" data-theme="matrix">
+                <span class="swatch-dot" style="background: #00ff9d;"></span> Matrix Emerald
+              </button>
+              <button class="theme-option" data-theme="solar">
+                <span class="swatch-dot" style="background: #ffb703;"></span> Solar Flare
+              </button>
+            </div>
+          </div>
+
           <button class="icon-btn" id="audio-toggle-btn" title="Toggle Sound SFX">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="audio-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           </button>
+
           <a href="#contact" class="btn btn-primary desktop-cta" style="padding: 10px 22px; font-size: 0.88rem;">Let's Talk</a>
           
           <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -71,6 +98,47 @@ export function renderNavbar(container, data) {
 
   if (navBackdrop) {
     navBackdrop.addEventListener('click', closeMobileMenu);
+  }
+
+  // Attach terminal toggle button handler
+  const termBtn = container.querySelector('#terminal-toggle-btn');
+  if (termBtn) {
+    termBtn.addEventListener('click', () => {
+      soundFx.playClickSound();
+      if (callbacks.openTerminal) {
+        callbacks.openTerminal();
+      }
+    });
+  }
+
+  // Attach Theme Dropdown Handlers
+  const themeToggleBtn = container.querySelector('#theme-toggle-btn');
+  const themeDropdownMenu = container.querySelector('#theme-dropdown-menu');
+  const themeOptions = container.querySelectorAll('.theme-option');
+
+  if (themeToggleBtn && themeDropdownMenu) {
+    themeToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      soundFx.playClickSound();
+      themeDropdownMenu.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!themeDropdownMenu.contains(e.target) && e.target !== themeToggleBtn) {
+        themeDropdownMenu.classList.remove('active');
+      }
+    });
+
+    themeOptions.forEach(opt => {
+      opt.addEventListener('click', () => {
+        soundFx.playClickSound();
+        const themeKey = opt.getAttribute('data-theme');
+        if (callbacks.onSelectTheme) {
+          callbacks.onSelectTheme(themeKey);
+        }
+        themeDropdownMenu.classList.remove('active');
+      });
+    });
   }
 
   // Attach navbar sound & scroll handlers
