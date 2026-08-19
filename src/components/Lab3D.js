@@ -13,7 +13,7 @@ export function renderLab3D(container, heroMesh, sceneManager) {
           <p class="section-desc">Customize the interactive 3D WebGL viewport in real-time. Switch geometries, trigger disintegration physics, toggle pulse modes, and morph color themes.</p>
         </div>
 
-        <div class="lab-grid">
+        <div class="lab-layout">
           <div class="glass-panel lab-preview-box" id="lab-preview-box">
             <div class="lab-live-badge">
               <span class="live-dot"></span> REALTIME THREE.JS RENDERER
