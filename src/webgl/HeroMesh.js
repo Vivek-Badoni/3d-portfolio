@@ -380,6 +380,11 @@ export class HeroMesh {
       if (this.innerMesh) this.innerMesh.scale.set(1.07, 1.07, 1.07);
     }
 
+    // Position offset to align 3D mesh to right side on desktop so Hero text is 100% visible!
+    const isDesktop = window.innerWidth > 992;
+    const targetX = isDesktop ? 1.8 : 0;
+    this.group.position.x += (targetX - this.group.position.x) * 0.05;
+
     // Floating levitation bobbing
     this.group.position.y = Math.sin(t * 1.5) * (this.warpMode ? 0.35 : 0.2);
   }
