@@ -7,6 +7,7 @@ export const portfolioData = {
     location: "Dehradun, Uttarakhand, India",
     status: "Open for Full-Stack / Software Developer Roles & Internships",
     taglines: [
+      "Web Developer (PHP /Laravel / React)",
       "Full-Stack Developer (Python / Flask / React)",
       "PHP & Laravel Web Application Engineer",
       "Building ATS & Database-Driven Applications",
@@ -21,7 +22,7 @@ export const portfolioData = {
       },
       {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/vivek-badoni",
+        url: "www.linkedin.com/in/vivek-badoni-396912325",
         icon: "linkedin"
       }
     ]
@@ -163,7 +164,7 @@ export const portfolioData = {
       description: "Built a full-stack ATS scoring engine in Python and Flask that evaluates resumes across 6+ core sections and matches skills against multiple job roles. Designed an admin analytics dashboard with 4+ chart types (role distribution, skill gaps, score trends) using Chart.js. Automated PDF report generation and CSV export with ReportLab.",
       image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop",
       tags: ["Python", "Flask", "SQLite", "Chart.js", "ReportLab", "ATS Engine"],
-      demoUrl: "https://github.com/Vivek-Badoni",
+      demoUrl: "https://ai-resume-analyzer-tguj.onrender.com/",
       githubUrl: "https://github.com/Vivek-Badoni",
       featured: true
     },
@@ -175,8 +176,7 @@ export const portfolioData = {
       description: "Built a complete authentication module in Laravel featuring registration, login, logout, and protected dashboard routes. Secured the application with CSRF protection, bcrypt password hashing, form validation, and middleware route guards. Designed reusable Blade template views.",
       image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
       tags: ["PHP", "Laravel", "MySQL", "Eloquent ORM", "Blade", "Security"],
-      demoUrl: "https://github.com/Vivek-Badoni",
-      githubUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni/Laravel-Login-Project",
       featured: true
     },
     {
@@ -188,7 +188,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
       tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3", "CRUD"],
       demoUrl: "https://github.com/Vivek-Badoni",
-      githubUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni/student-registration-sys",
       featured: true
     },
     {
@@ -200,7 +200,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=800&auto=format&fit=crop",
       tags: ["Python", "Speech Recognition", "Voice AI", "Automation"],
       demoUrl: "https://github.com/Vivek-Badoni",
-      githubUrl: "https://github.com/Vivek-Badoni",
+      githubUrl: "https://github.com/Vivek-Badoni/-VOICE-DESKTOP-ASSISTANT-",
       featured: false
     },
     {
@@ -211,8 +211,8 @@ export const portfolioData = {
       description: "Designed and deployed a fully responsive personal portfolio site featuring Three.js WebGL rendering, custom audio effects, CLI terminal overlay, and dynamic theme switching.",
       image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop",
       tags: ["HTML5", "CSS3", "JavaScript", "React", "Three.js", "WebGL"],
-      demoUrl: "https://github.com/Vivek-Badoni",
-      githubUrl: "https://github.com/Vivek-Badoni",
+      demoUrl: "https://vivek-badoni.github.io/Portfolio-Vivek_Badoni/",
+      githubUrl: "https://github.com/Vivek-Badoni/Portfolio-Vivek_Badoni",
       featured: false
     }
   ]
