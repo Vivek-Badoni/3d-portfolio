@@ -9,7 +9,7 @@ export function renderNavbar(container, data, callbacks = {}) {
       <div class="container">
         <a href="#hero" class="brand-logo">
           <div class="logo-badge">${initials}</div>
-          <span>${firstName}<span class="text-gradient">.DEV</span></span>
+          <span>${firstName}<span class="text-gradient">.Badoni</span></span>
         </a>
 
         <div class="nav-backdrop" id="nav-backdrop"></div>
